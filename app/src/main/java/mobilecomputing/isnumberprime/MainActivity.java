@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private Button nextButton;
     private Toast currentToast = null;
     private TextView tv;
-    private  String st;
+    private String st;
+    private boolean setButton = true;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -41,20 +42,31 @@ public class MainActivity extends AppCompatActivity {
 
 
         mCorrect = (Button)findViewById(R.id.button1);
-        mCorrect.setOnClickListener(new Button.OnClickListener() {
+        mCorrect.setOnClickListener(new Button.OnClickListener()
+        {
+
             public void onClick(View v) {
-                if (IsPrime(Double.parseDouble(st))) {
-                    if(currentToast!=null) {
-                        currentToast.cancel();
+
+                if(!setButton)
+                {
+                    mCorrect.setEnabled(false);
+                }
+                else {
+                    if (IsPrime(Double.parseDouble(st))) {
+                        if (currentToast != null) {
+                            currentToast.cancel();
+                        }
+                        currentToast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_SHORT);
+                        currentToast.show();
+                    } else {
+                        if (currentToast != null) {
+                            currentToast.cancel();
+                        }
+                        currentToast = Toast.makeText(getApplicationContext(), "Oops, you are Incorrect", Toast.LENGTH_SHORT);
+                        currentToast.show();
                     }
-                    currentToast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_SHORT);
-                    currentToast.show();
-                } else {
-                    if(currentToast!=null) {
-                        currentToast.cancel();
-                    }
-                    currentToast = Toast.makeText(getApplicationContext(), "Oops, you are Incorrect", Toast.LENGTH_SHORT);
-                    currentToast.show();
+
+                    setButton = false;
                 }
 
             }
@@ -65,18 +77,26 @@ public class MainActivity extends AppCompatActivity {
         mInCorrect = (Button)findViewById(R.id.button2);
         mInCorrect.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                if (IsPrime(Double.parseDouble(st))) {
-                    if(currentToast!=null) {
-                        currentToast.cancel();
+                if(!setButton)
+                {
+                    mInCorrect.setEnabled(false);
+                }
+                else {
+                    if (IsPrime(Double.parseDouble(st))) {
+                        if (currentToast != null) {
+                            currentToast.cancel();
+                        }
+                        currentToast = Toast.makeText(getApplicationContext(), "Oops, you are Incorrect", Toast.LENGTH_SHORT);
+                        currentToast.show();
+                    } else {
+                        if (currentToast != null) {
+                            currentToast.cancel();
+                        }
+                        currentToast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_SHORT);
+                        currentToast.show();
+
                     }
-                    currentToast = Toast.makeText(getApplicationContext(), "Oops, you are Incorrect", Toast.LENGTH_SHORT);
-                    currentToast.show();
-                } else {
-                    if(currentToast!=null) {
-                        currentToast.cancel();
-                    }
-                    currentToast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_SHORT);
-                    currentToast.show();
+                    setButton = false;
                 }
 
             }
@@ -86,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
         nextButton = (Button)findViewById(R.id.button3);
         nextButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
+
+                mCorrect.setEnabled(true);
+                mInCorrect.setEnabled(true);
+                setButton = true;
                 if(currentToast!=null) {
                     currentToast.cancel();
                 }
