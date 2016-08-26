@@ -40,13 +40,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "In onCreate");
+        cheatTextView = (TextView) findViewById(R.id.TextCheatHint);
         if(savedInstanceState != null){
             st = savedInstanceState.getString(S_NUMBER);
             enableTrue = savedInstanceState.getBoolean("enableTrue");
             enableFalse = savedInstanceState.getBoolean("enableFalse");
             enableHint = savedInstanceState.getBoolean("enableHint");
             enableCheat = savedInstanceState.getBoolean("enableCheat");
+            hint = savedInstanceState.getInt("hintSaved");
+            cheat = savedInstanceState.getInt("cheatSaved");
+            Log.d("dxfgh",String.valueOf(hint));
+            Log.d("dxfgh",String.valueOf(cheat));
+            if(cheat==1 && hint==0)
+            {
+                cheatTextView.setText("You have cheated");
+            }
+            if(hint==1 && cheat==0)
+            {
 
+                cheatTextView.setText("You have taken hint");
+            }
+            if(cheat==1 && hint ==1)
+            {
+
+                cheatTextView.setText("You have taken hint & cheated as well");
+            }
 
 
         }
@@ -58,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         tv = (TextView) findViewById(R.id.TextView1);
         tv.setText(st);
-        cheatTextView = (TextView) findViewById(R.id.TextCheatHint);
+
 
         mCorrect = (Button)findViewById(R.id.button1);
         Log.d("Main activity","onCreate"+enableCheat+enableHint+enableTrue+enableFalse);
@@ -298,6 +316,8 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putBoolean("enableHint",enableHint);
         savedInstanceState.putBoolean("enableCheat",enableCheat);
         savedInstanceState.putInt("hintSaved",hint);
+        savedInstanceState.putInt("cheatSaved",cheat);
+
 
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
